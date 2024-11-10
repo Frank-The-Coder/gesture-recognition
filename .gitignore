@@ -1,0 +1,38 @@
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+*.env
+*.venv
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# MacOS and Windows specific files
+.DS_Store
+Thumbs.db
+
+# IDE configuration files (for example: PyCharm, VSCode)
+.idea/
+.vscode/
+
+# Python test output
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+*.tox
+*.nox
+*.coverage
+*.hypothesis/
+*.pytest_cache/
+
+
+data/gestures/
