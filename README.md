@@ -102,7 +102,17 @@ saved_model/model_0.001_32_20.pth
 
 ## Model Evaluation
 
-Once the model is trained and saved, you can evaluate it using the `test.py` script. This script loads the trained model from the saved file, evaluates it on the test set, and outputs the **Test Accuracy** and **Test Loss**.
+Once the model is trained and saved, you can evaluate it using the `test.py` script.
+
+### What `test.py` Does:
+
+- **Loading the Model**: The script loads the trained model from the specified path (`saved_model/model_0.001_32_20.pth`).
+- **Test Evaluation**: It uses the `evaluate()` function to calculate the **test error** and **test loss** on the test dataset.
+- **Results**: After evaluation, the script prints the **Test Accuracy** (calculated as `1 - test error`) and **Test Loss** to give insights into the model's performance.
+
+### CUDA and GPU Usage:
+
+The model is designed to automatically leverage **GPU** acceleration if available, ensuring faster training and evaluation. If a GPU is not available, the model will seamlessly fall back to **CPU**. This functionality enhances performance, particularly during the training phase, enabling the model to handle larger datasets more efficiently.
 
 ### To Evaluate the Model:
 
@@ -116,62 +126,6 @@ Once the model is trained and saved, you can evaluate it using the `test.py` scr
 
 - **Test Accuracy**: 96.86%
 - **Test Loss**: 0.1937
-
-### `test.py` Code:
-
-```python
-import torch
-from src.model import GestureCNN  # Your model class
-from src.evaluate import evaluate  # Your evaluate function
-from src.data_loader import get_data_loader
-
-def load_model(model_path):
-    """
-    Loads the model from the specified path and returns the model.
-
-    Args:
-        model_path: Path to the saved model.
-
-    Returns:
-        model: Loaded model with weights.
-    """
-    # Reinitialize the model
-    model = GestureCNN()
-
-    # Load the state_dict (weights) from the saved model
-    model.load_state_dict(torch.load(model_path))
-
-    # Set the model to evaluation mode
-    model.eval()
-
-    return model
-
-def main():
-    # Hyperparameters
-    batch_size = 32
-    target_classes = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
-
-    # Model path (where the final model is saved)
-    model_save_path = "saved_model/model_0.001_32_20.pth"
-
-    # Load the model
-    model = load_model(model_save_path)
-
-    # Get test data loader
-    _, _, test_loader = get_data_loader(target_classes, batch_size)
-
-    # Evaluate the model on the test set
-    test_err, test_loss = evaluate(model, test_loader)
-
-    # Print Test Accuracy (calculated as 1 - error) and Test Loss
-    test_accuracy = 1 - test_err  # Convert error to accuracy
-    print(f'Test Accuracy: {test_accuracy * 100:.2f}%, Test Loss: {test_loss:.4f}')
-```
-
-### **How It Works**:
-
-- **Loading the Model**: The model is loaded using the `load_model()` function from the saved path `"saved_model/model_0.001_32_20.pth"`.
-- **Evaluation**: The model is evaluated on the test set using the `evaluate()` function, which returns the **error** and **loss**. The error is then converted into **accuracy** (accuracy = 1 - error).
 
 ## File Structure
 
