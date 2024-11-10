@@ -18,6 +18,9 @@ def main():
 
     # Model and optimizer
     model = GestureCNN()
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print(f"Using device: {device}")
+    model = model.to(device)
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
     # Create the 'saved_model' directory if it doesn't exist

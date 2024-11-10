@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 
 def evaluate(model, test_loader):
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.eval()
     correct = 0
     total = 0
@@ -10,6 +11,7 @@ def evaluate(model, test_loader):
     
     with torch.no_grad():
         for inputs, labels in test_loader:
+            inputs, labels = inputs.to(device), labels.to(device)
             outputs = model(inputs)
             loss = criterion(outputs, labels)
             running_loss += loss.item()

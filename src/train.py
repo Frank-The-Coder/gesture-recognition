@@ -3,6 +3,8 @@ import torch.nn as nn
 import torch.optim as optim
 
 def train(model, train_loader, val_loader, optimizer, num_epochs, model_save_path):
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = model.to(device)  # Move the model to the appropriate device
     criterion = nn.CrossEntropyLoss()
 
     for epoch in range(num_epochs):
@@ -13,6 +15,7 @@ def train(model, train_loader, val_loader, optimizer, num_epochs, model_save_pat
         
         # Loop through the training batches
         for inputs, labels in train_loader:
+            inputs, labels = inputs.to(device), labels.to(device)  # Move to device
             optimizer.zero_grad()  # Zero gradients
             
             outputs = model(inputs)  # Forward pass
@@ -44,6 +47,7 @@ def train(model, train_loader, val_loader, optimizer, num_epochs, model_save_pat
 
 
 def evaluate(model, val_loader, criterion):
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.eval()  # Set to evaluation mode
     val_loss = 0.0
     correct = 0
@@ -51,6 +55,7 @@ def evaluate(model, val_loader, criterion):
     
     with torch.no_grad():  # Disable gradient calculation
         for inputs, labels in val_loader:
+            inputs, labels = inputs.to(device), labels.to(device)  # Move to device
             outputs = model(inputs)  # Forward pass
             loss = criterion(outputs, labels)
             
