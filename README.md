@@ -219,8 +219,6 @@ pip install -r requirements.txt
 
 This project implements a **gesture recognition model** using a CNN architecture. The model was trained on a custom dataset of hand gestures and achieved a **test accuracy of 96.86%**. The trained model is saved and can be loaded for evaluation or inference.
 
----
+## Licensing
 
-This **README.md** includes the **Test Accuracy** and **Test Loss** in the beginning, formatted as you requested, and provides all relevant details for training, evaluating, and using the model.
-
-Let me know if you need any further adjustments!
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
